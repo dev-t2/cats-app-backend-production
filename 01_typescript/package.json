@@ -1,7 +1,9 @@
 {
   "name": "01_typescript",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "dev": "ts-node src/app.ts"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.13",
