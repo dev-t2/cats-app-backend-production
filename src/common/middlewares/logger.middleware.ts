@@ -19,7 +19,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
       if (process.env.NODE_ENV !== 'production') {
         this.logger.log(
-          `${req.method} ${req.originalUrl} ${res.statusCode} ${responseTime} ms - ${contentLength}`,
+          `${req.method} ${req.originalUrl} ${res.statusCode} - ${contentLength} \x1b[33m+${responseTime}ms`,
         );
       } else {
         const ip = req.ip || req.socket.remoteAddress;
@@ -28,7 +28,7 @@ export class LoggerMiddleware implements NestMiddleware {
         const userAgent = req.header('user-agent');
 
         this.logger.log(
-          `${ip} - ${userId} "${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} ${responseTime} ms - ${contentLength} "${referrer}" "${userAgent}"`,
+          `${ip} - ${userId} "${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength} "${referrer}" "${userAgent}" \x1b[33m+${responseTime}ms`,
         );
       }
     });
