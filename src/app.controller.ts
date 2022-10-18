@@ -5,6 +5,6 @@ export class AppController {
   @Get()
   @Render('index')
   root() {
-    return { message: 'Random Chatting Service' };
+    return { message: 'Random Chat Service' };
   }
 }
