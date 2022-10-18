@@ -8,3 +8,5 @@
 - [Handlebars](https://handlebarsjs.com)
 - [Reset CSS](https://meyerweb.com/eric/tools/css/reset)
 - [PostgreSQL](https://www.postgresql.org)
+- [Prisma](https://www.prisma.io)
+  - [Configuring logging](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/logging)
