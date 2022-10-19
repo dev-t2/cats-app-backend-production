@@ -7,6 +7,7 @@
   - [Exception filters](https://docs.nestjs.com/exception-filters)
   - [Pipes](https://docs.nestjs.com/pipes)
   - [Interceptors](https://docs.nestjs.com/interceptors)
+  - [Gateways](https://docs.nestjs.com/websockets/gateways)
   - [Prisma](https://docs.nestjs.com/recipes/prisma)
 - [Handlebars](https://handlebarsjs.com)
 - [Reset CSS](https://meyerweb.com/eric/tools/css/reset)
