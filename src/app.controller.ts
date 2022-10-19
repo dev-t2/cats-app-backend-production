@@ -5,7 +5,7 @@ export class AppController {
   @Get()
   @Render('index')
   root() {
-    return { message: 'Random Chat Service' };
+    return;
   }
 
   @All('/teapot')
