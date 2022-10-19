@@ -22,13 +22,14 @@ export class HttpLoggerMiddleware implements NestMiddleware {
           `${req.method} ${req.originalUrl} ${res.statusCode} - ${contentLength} \x1b[33m+${responseTime}ms`,
         );
       } else {
-        const ip = req.ip || req.socket.remoteAddress;
-        const userId = req.user?.id || 0;
-        const referrer = req.header('Referer') || req.header('Referrer') || '-';
+        const userId = req.user?.id;
+        const formattedUserId = userId ? ` ${userId} ` : ' ';
+        const referrer = req.header('Referer') || req.header('Referrer');
+        const formattedReferrer = referrer ? ` "${referrer}" ` : ' ';
         const userAgent = req.header('user-agent');
 
         this.logger.log(
-          `${ip} - ${userId} "${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength} "${referrer}" "${userAgent}" \x1b[33m+${responseTime}ms`,
+          `${req.ip} -${formattedUserId}"${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength}${formattedReferrer}"${userAgent}" \x1b[33m+${responseTime}ms`,
         );
       }
     });

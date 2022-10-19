@@ -1,11 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
-import { PrismaModule } from './prisma/prisma.module';
 import { AppController } from './app.controller';
 import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middleware';
 
 @Module({
-  imports: [PrismaModule],
+  // imports: [PrismaModule],
   controllers: [AppController],
 })
 export class AppModule implements NestModule {
