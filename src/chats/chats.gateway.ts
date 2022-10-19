@@ -32,7 +32,7 @@ export class ChatsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
 
   @SubscribeMessage('createUser')
   createUser(@MessageBody('nickname') nickname: string, @ConnectedSocket() socket: Socket) {
-    console.log(socket.id);
+    socket.broadcast.emit('createUser', nickname);
 
     return nickname;
   }
