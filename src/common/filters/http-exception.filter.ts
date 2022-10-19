@@ -1,9 +1,9 @@
 /*
   Available built-in HTTP exceptions
-  - Common: BadRequestException
-  - Authentication: UnauthorizedException
-  - Authorization: ForbiddenException
-  - Error: InternalServerErrorException
+  - Common: BadRequestException 400 / ImATeapotException 418
+  - Authentication: UnauthorizedException 401
+  - Authorization: ForbiddenException 403
+  - Error: InternalServerErrorException 500
 */
 
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
