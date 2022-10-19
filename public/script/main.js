@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io('/chats');
 
 // const header = document.querySelector('header');
 // const list = document.querySelector('main > ul');
