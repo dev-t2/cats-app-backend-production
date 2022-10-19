@@ -15,3 +15,4 @@
 - [Prisma](https://www.prisma.io)
   - [Configuring logging](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/logging)
   - [Middleware sample: logging](https://www.prisma.io/docs/concepts/components/prisma-client/middleware/logging-middleware)
+- [Socket.IO](https://socket.io)
