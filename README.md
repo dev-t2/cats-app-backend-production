@@ -5,6 +5,7 @@
   - [Middleware](https://docs.nestjs.com/middleware)
   - [Logger](https://docs.nestjs.com/techniques/logger)
   - [Exception filters](https://docs.nestjs.com/exception-filters)
+  - [Pipes](https://docs.nestjs.com/pipes)
   - [Prisma](https://docs.nestjs.com/recipes/prisma)
 - [Handlebars](https://handlebarsjs.com)
 - [Reset CSS](https://meyerweb.com/eric/tools/css/reset)
