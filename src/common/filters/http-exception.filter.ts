@@ -1,3 +1,11 @@
+/*
+  Available built-in HTTP exceptions
+  - Common: BadRequestException
+  - Authentication: UnauthorizedException
+  - Authorization: ForbiddenException
+  - Error: InternalServerErrorException
+*/
+
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 import { Response } from 'express';
 
