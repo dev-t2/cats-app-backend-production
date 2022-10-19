@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, ImATeapotException, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -6,5 +6,12 @@ export class AppController {
   @Render('index')
   root() {
     return { message: 'Random Chat Service' };
+  }
+
+  @Get('/teapot')
+  teapot() {
+    throw new ImATeapotException(
+      'The requested entity body is short and stout🤔 Tip me over and pour me out🫖',
+    );
   }
 }
