@@ -17,10 +17,11 @@ export class HttpLoggerMiddleware implements NestMiddleware {
 
       const responseTime = Date.now() - startTime;
 
+      let message = '';
+
       if (process.env.NODE_ENV !== 'production') {
-        // this.logger.log(
-        //   `${req.method} ${req.originalUrl} ${res.statusCode} - ${contentLength} \x1b[33m+${responseTime}ms`,
-        // );
+        // TODO: Check before deploying the backend
+        // message = `${req.method} ${req.originalUrl} ${res.statusCode} - ${contentLength} \x1b[33m+${responseTime}ms`;
 
         const userId = req.user?.id;
         const formattedUserId = userId ? ` ${userId} ` : ' ';
@@ -28,9 +29,7 @@ export class HttpLoggerMiddleware implements NestMiddleware {
         const formattedReferrer = referrer ? ` "${referrer}" ` : ' ';
         const userAgent = req.header('user-agent');
 
-        this.logger.log(
-          `${req.ip} -${formattedUserId}"${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength}${formattedReferrer}"${userAgent}" \x1b[33m+${responseTime}ms`,
-        );
+        message = `${req.ip} -${formattedUserId}"${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength}${formattedReferrer}"${userAgent}" \x1b[33m+${responseTime}ms`;
       } else {
         const userId = req.user?.id;
         const formattedUserId = userId ? ` ${userId} ` : ' ';
@@ -38,9 +37,13 @@ export class HttpLoggerMiddleware implements NestMiddleware {
         const formattedReferrer = referrer ? ` "${referrer}" ` : ' ';
         const userAgent = req.header('user-agent');
 
-        this.logger.log(
-          `${req.ip} -${formattedUserId}"${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength}${formattedReferrer}"${userAgent}" \x1b[33m+${responseTime}ms`,
-        );
+        message = `${req.ip} -${formattedUserId}"${req.method} ${req.originalUrl} HTTP/${req.httpVersion}" ${res.statusCode} - ${contentLength}${formattedReferrer}"${userAgent}" \x1b[33m+${responseTime}ms`;
+      }
+
+      if (res.statusCode >= 400) {
+        this.logger.error(message);
+      } else {
+        this.logger.log(message);
       }
     });
 
