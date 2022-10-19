@@ -16,8 +16,6 @@ async function bootstrap() {
   app.setViewEngine('hbs');
 
   await app.listen(3000);
-
-  console.log(`\nApplication is running on: ${await app.getUrl()}\n`);
 }
 
 bootstrap();
