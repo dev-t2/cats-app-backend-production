@@ -9,7 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 
-@WebSocketGateway({ namespace: 'chats' })
+@WebSocketGateway({ namespace: 'chats', transports: ['websocket'] })
 export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private readonly logger = new Logger(ChatsGateway.name);
 

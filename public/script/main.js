@@ -1,4 +1,4 @@
-const socket = io('/chats');
+const socket = io('/chats', { transports: ['websocket'] });
 
 const header = document.querySelector('header');
 // const list = document.querySelector('main > ul');
