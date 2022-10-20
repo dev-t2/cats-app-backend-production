@@ -18,13 +18,20 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   handleDisconnect(@ConnectedSocket() socket: Socket) {
-    this.logger.log(`Disconnected ${socket.nsp.name} ${socket.id}`);
+    socket.broadcast.emit('deleteUser', { nickname: socket.id });
   }
 
   @SubscribeMessage('createUser')
   createUser(@MessageBody('nickname') nickname: string, @ConnectedSocket() socket: Socket) {
-    socket.broadcast.emit('createUser', nickname);
+    socket.broadcast.emit('createUser', { nickname });
 
-    return nickname;
+    return { nickname };
+  }
+
+  @SubscribeMessage('createMessage')
+  createMessage(@MessageBody('message') message: string, @ConnectedSocket() socket: Socket) {
+    socket.broadcast.emit('createMessage', { nickname: socket.id, message });
+
+    return { message };
   }
 }
