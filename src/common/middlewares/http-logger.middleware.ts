@@ -7,7 +7,7 @@ interface IRequest extends Request {
 
 @Injectable()
 export class HttpLoggerMiddleware implements NestMiddleware {
-  private readonly logger = new Logger('HTTP');
+  private readonly logger = new Logger(HttpLoggerMiddleware.name);
 
   use(req: IRequest, res: Response, next: NextFunction) {
     const startTime = Date.now();
