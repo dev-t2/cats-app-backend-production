@@ -15,9 +15,13 @@ export class ChatsGateway implements OnGatewayDisconnect {
   constructor(private readonly chatsRepository: ChatsRepository) {}
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {
-    const user = await this.chatsRepository.deleteUser(socket.id);
+    const user = await this.chatsRepository.findUserById(socket.id);
 
-    socket.broadcast.emit('deleteUser', { nickname: user.nickname });
+    if (user) {
+      const deletedUser = await this.chatsRepository.deleteUser(user.id);
+
+      socket.broadcast.emit('deleteUser', { nickname: deletedUser.nickname });
+    }
   }
 
   @SubscribeMessage('enterUser')

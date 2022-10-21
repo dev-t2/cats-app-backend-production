@@ -20,6 +20,13 @@ export class ChatsRepository {
     });
   }
 
+  async findUserById(id: string) {
+    return await this.prismaService.socket.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+  }
+
   async deleteUser(id: string) {
     return await this.prismaService.socket.delete({
       where: { id },
