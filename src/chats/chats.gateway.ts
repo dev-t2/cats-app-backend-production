@@ -1,33 +1,34 @@
-import { Logger } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
-  OnGatewayConnection,
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 
-import { CreateMessageDto, CreateUserDto } from './chats.dto';
+import { ChatsRepository } from './chats.repository';
+import { CreateMessageDto, EnterUserDto } from './chats.dto';
 
 @WebSocketGateway({ namespace: 'chats', transports: ['websocket'] })
-export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  private readonly logger = new Logger(ChatsGateway.name);
-
-  handleConnection(@ConnectedSocket() socket: Socket) {
-    this.logger.log(`Connected ${socket.nsp.name} ${socket.id}`);
-  }
+export class ChatsGateway implements OnGatewayDisconnect {
+  constructor(private readonly chatsRepository: ChatsRepository) {}
 
   handleDisconnect(@ConnectedSocket() socket: Socket) {
     socket.broadcast.emit('deleteUser', { nickname: socket.id });
   }
 
-  @SubscribeMessage('createUser')
-  createUser(@MessageBody() { nickname }: CreateUserDto, @ConnectedSocket() socket: Socket) {
-    socket.broadcast.emit('createUser', { nickname });
+  @SubscribeMessage('enterUser')
+  async enterUser(@MessageBody() { nickname }: EnterUserDto, @ConnectedSocket() socket: Socket) {
+    let user = await this.chatsRepository.findUserByNickname(nickname);
 
-    return { nickname };
+    if (!user) {
+      user = await this.chatsRepository.createUser(socket.id, nickname);
+    }
+
+    socket.broadcast.emit('enterUser', { nickname: user.nickname });
+
+    return { nickname: user.nickname };
   }
 
   @SubscribeMessage('createMessage')

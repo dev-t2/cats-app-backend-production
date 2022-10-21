@@ -13,14 +13,14 @@ const updateMessages = (message) => {
   list.appendChild(li);
 };
 
-const createUser = () => {
+const enterUser = () => {
   const nickname = prompt('Please enter your nickname');
 
-  socket.emit('createUser', { nickname: nickname.trim() }, ({ nickname }) => {
+  socket.emit('enterUser', { nickname: nickname.trim() }, ({ nickname }) => {
     header.innerText = nickname;
   });
 
-  socket.on('createUser', ({ nickname }) => {
+  socket.on('enterUser', ({ nickname }) => {
     updateMessages(`${nickname} has entered the room`);
   });
 
@@ -48,7 +48,7 @@ const createMessage = (e) => {
 };
 
 const main = () => {
-  createUser();
+  enterUser();
 
   form.addEventListener('submit', createMessage);
 };
