@@ -9,12 +9,28 @@ export class ChatsRepository {
   async findUserByNickname(nickname: string) {
     return await this.prismaService.socket.findUnique({
       where: { nickname },
+      select: { nickname: true },
     });
   }
 
   async createUser(id: string, nickname: string) {
     return await this.prismaService.socket.create({
       data: { id, nickname },
+      select: { nickname: true },
+    });
+  }
+
+  async deleteUser(id: string) {
+    return await this.prismaService.socket.delete({
+      where: { id },
+      select: { nickname: true },
+    });
+  }
+
+  async createMessage(socketId: string, content: string) {
+    return await this.prismaService.message.create({
+      data: { socketId, content },
+      select: { socket: { select: { nickname: true } }, content: true },
     });
   }
 }

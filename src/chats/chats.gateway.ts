@@ -14,8 +14,10 @@ import { CreateMessageDto, EnterUserDto } from './chats.dto';
 export class ChatsGateway implements OnGatewayDisconnect {
   constructor(private readonly chatsRepository: ChatsRepository) {}
 
-  handleDisconnect(@ConnectedSocket() socket: Socket) {
-    socket.broadcast.emit('deleteUser', { nickname: socket.id });
+  async handleDisconnect(@ConnectedSocket() socket: Socket) {
+    const user = await this.chatsRepository.deleteUser(socket.id);
+
+    socket.broadcast.emit('deleteUser', { nickname: user.nickname });
   }
 
   @SubscribeMessage('enterUser')
@@ -32,9 +34,17 @@ export class ChatsGateway implements OnGatewayDisconnect {
   }
 
   @SubscribeMessage('createMessage')
-  createMessage(@MessageBody() { content }: CreateMessageDto, @ConnectedSocket() socket: Socket) {
-    socket.broadcast.emit('createMessage', { nickname: socket.id, content });
+  async createMessage(
+    @MessageBody() { content }: CreateMessageDto,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    const message = await this.chatsRepository.createMessage(socket.id, content);
 
-    return { content };
+    socket.broadcast.emit('createMessage', {
+      nickname: message.socket.nickname,
+      content: message.content,
+    });
+
+    return { content: message.content };
   }
 }
