@@ -40,10 +40,12 @@ export class ChatsGateway implements OnGatewayDisconnect {
   ) {
     const message = await this.chatsRepository.createMessage(socket.id, content);
 
-    socket.broadcast.emit('createMessage', {
-      nickname: message.socket.nickname,
-      content: message.content,
-    });
+    if (message.socket) {
+      socket.broadcast.emit('createMessage', {
+        nickname: message.socket.nickname,
+        content: message.content,
+      });
+    }
 
     return { content: message.content };
   }

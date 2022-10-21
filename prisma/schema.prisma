@@ -21,10 +21,10 @@ model Socket {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  socketId  String
+  socketId  String?
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  socket Socket @relation(fields: [socketId], references: [id], onDelete: SetNull)
+  socket Socket? @relation(fields: [socketId], references: [id], onDelete: SetNull)
 }

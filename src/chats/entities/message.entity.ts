@@ -6,7 +6,7 @@ export class Message implements MessageModel {
   id: number;
 
   @IsString()
-  socketId: string;
+  socketId: string | null;
 
   @IsNotEmpty()
   @IsString()
