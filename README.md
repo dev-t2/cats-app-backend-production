@@ -9,6 +9,7 @@
   - [Interceptors](https://docs.nestjs.com/interceptors)
   - [Gateways](https://docs.nestjs.com/websockets/gateways)
   - [Prisma](https://docs.nestjs.com/recipes/prisma)
+  - [Validation](https://docs.nestjs.com/techniques/validation)
 - [Handlebars](https://handlebarsjs.com)
 - [Reset CSS](https://meyerweb.com/eric/tools/css/reset)
 - [Socket.IO](https://socket.io)

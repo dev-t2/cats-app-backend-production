@@ -9,6 +9,8 @@ import {
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 
+import { CreateMessageDto, CreateUserDto } from './chats.dto';
+
 @WebSocketGateway({ namespace: 'chats', transports: ['websocket'] })
 export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private readonly logger = new Logger(ChatsGateway.name);
@@ -22,16 +24,16 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage('createUser')
-  createUser(@MessageBody('nickname') nickname: string, @ConnectedSocket() socket: Socket) {
+  createUser(@MessageBody() { nickname }: CreateUserDto, @ConnectedSocket() socket: Socket) {
     socket.broadcast.emit('createUser', { nickname });
 
     return { nickname };
   }
 
   @SubscribeMessage('createMessage')
-  createMessage(@MessageBody('message') message: string, @ConnectedSocket() socket: Socket) {
-    socket.broadcast.emit('createMessage', { nickname: socket.id, message });
+  createMessage(@MessageBody() { content }: CreateMessageDto, @ConnectedSocket() socket: Socket) {
+    socket.broadcast.emit('createMessage', { nickname: socket.id, content });
 
-    return { message };
+    return { content };
   }
 }

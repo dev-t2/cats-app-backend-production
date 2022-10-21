@@ -25,24 +25,24 @@ const createUser = () => {
   });
 
   socket.on('deleteUser', ({ nickname }) => {
-    updateMessages(`${nickname} has left the room`);
+    updateMessages(`${nickname} left the room`);
   });
 
-  socket.on('createMessage', ({ nickname, message }) => {
-    updateMessages(`${nickname}: ${message}`);
+  socket.on('createMessage', ({ nickname, content }) => {
+    updateMessages(`${nickname}: ${content}`);
   });
 };
 
 const createMessage = (e) => {
   e.preventDefault();
 
-  const message = input.value.trim();
+  const content = input.value.trim();
 
-  if (message) {
-    socket.emit('createMessage', { message }, ({ message }) => {
+  if (content) {
+    socket.emit('createMessage', { content }, ({ content }) => {
       input.value = '';
 
-      updateMessages(`${message}`);
+      updateMessages(`${content}`);
     });
   }
 };
